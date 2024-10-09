@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -9,11 +10,16 @@ namespace Data_Acess_Layer
 {
     public  class Group
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int GroupId { get; set;}
+        [Required]
         public string GroupName { get; set;}
         public DateTime CreateAt { get; init; } = DateTime.UtcNow;
-        [ForeignKey(nameof(Group.CreateBy))]
-        public int Userid { get; set; }
-        public User CreateBy { get; set; }
+        #region Mapping the relation between Creating User and Group
+        [ForeignKey(nameof(Group.UserCreatedBy))]
+        public string CreatedUserId { get; set; }
+        public User UserCreatedBy { get; set; }
+        #endregion
     }
 }

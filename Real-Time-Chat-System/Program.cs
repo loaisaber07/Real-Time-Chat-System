@@ -1,4 +1,8 @@
 
+using Data_Acess_Layer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
 namespace Real_Time_Chat_System
 {
     public class Program
@@ -13,6 +17,11 @@ namespace Real_Time_Chat_System
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddDbContext<RealTimeDataBase>(op => { 
+            op.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
+            });  
+            builder.Services.AddIdentity<User,IdentityRole>()
+                .AddEntityFrameworkStores<RealTimeDataBase>();
 
             var app = builder.Build();
 
